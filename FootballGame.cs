@@ -17,5 +17,15 @@ namespace Practice_Linq
         public string City { get; set; }
         public string Country { get; set; }
         public bool Neutral { get; set; }
+
+
+        public override string ToString()
+        {
+            return
+                $"{Date.ToString("dd.MM.yyyy")} " +
+                $"{Home_team} - {Away_team}, " +
+                $"Score: {Home_score.ToString()} - {Away_score.ToString()}, " +
+                $"Country: {Country}";
+        }
     }
 }
