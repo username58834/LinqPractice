@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -399,7 +400,7 @@ namespace Practice_Linq
 
             foreach (var game in selectedGames)
             {
-                Console.WriteLine($"{game.Tournament} - {game.AvgGoals:F2}");
+                Console.WriteLine($"{game.Tournament} - {game.AvgGoals}");
             }
         }
 
@@ -410,7 +411,17 @@ namespace Practice_Linq
             //Query 15: Вивести команди відсортовані за алфавітом, які за вечь час зіграли всього 1 гру.
             //Вихідні команди повині мати властивості: Team - назва команди, Count - кількість ігор.  
 
-            var selectedGames = games; // допиши запит
+            var selectedGames = games
+                .SelectMany(x => new[] { x.Home_team, x.Away_team })
+                .GroupBy(x => x)
+                .Select(x => new
+                    {
+                        Team = x.Key,
+                        Count = x.Count()
+                    }
+                )
+                .Where(x => x.Count == 1)
+                .OrderBy(x => x.Team);
 
 
             // Результат
@@ -418,6 +429,10 @@ namespace Practice_Linq
 
             //foreach
 
+            foreach (var game in selectedGames)
+            {
+                Console.WriteLine($"{game.Team} - {game.Count}");
+            }
         }
 
     }
