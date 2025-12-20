@@ -121,7 +121,7 @@ namespace Practice_Linq
                     ) &&
                     x.Date.Year >= 2018 && x.Date.Year <= 2020 && 
                     x.Country != "Germany"
-                    );
+                );
 
 
             // Результат
@@ -140,7 +140,13 @@ namespace Practice_Linq
         {
             //Query 5: Вивести всі кваліфікаційні матчі (UEFA Euro qualification), які відбулися у Києві чи у Харкові, а також за умови перемоги української збірної.
 
-            var selectedGames = games; // допиши запит
+            var selectedGames = games
+                .Where(x =>
+                    x.Tournament == "UEFA Euro qualification" &&
+                    (x.City == "Kyiv" || x.City == "Kharkiv") &&
+                    x.Home_team == "Ukraine" &&
+                    x.Home_score > x.Away_score
+                );
 
 
             // Результат
@@ -148,6 +154,10 @@ namespace Practice_Linq
 
             //foreach
 
+            foreach (var game in selectedGames)
+            {
+                Console.WriteLine(game);
+            }
         }
 
         // Запит 6
