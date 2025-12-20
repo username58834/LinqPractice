@@ -113,7 +113,15 @@ namespace Practice_Linq
         {
             //Query 4: Вивести всі матчі збірної Германії з 2018 року по 2020 рік (включно), в яких вона на виїзді програла.
 
-            var selectedGames = games; // допиши запит
+            var selectedGames = games
+                .Where(x =>
+                    (
+                        (x.Home_team == "Germany" && x.Home_score < x.Away_score) ||
+                        (x.Away_team == "Germany" && x.Home_score > x.Away_score)
+                    ) &&
+                    x.Date.Year >= 2018 && x.Date.Year <= 2020 && 
+                    x.Country != "Germany"
+                    );
 
 
             // Результат
@@ -121,6 +129,10 @@ namespace Practice_Linq
 
             //foreach
 
+            foreach (var game in selectedGames)
+            {
+                Console.WriteLine(game);
+            }
         }
 
         // Запит 5
