@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Diagnostics.Metrics;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Practice_Linq
@@ -293,7 +294,12 @@ namespace Practice_Linq
         {
             //Query 11: Вивести 10 країн (без повторів) з сортуваннях від A до Z, в яких проводилися матчі у 2020 році.    
 
-            var selectedGames = games; // допиши запит
+            var selectedGames = games
+                .Where(x => x.Date.Year == 2020)
+                .OrderBy(x => x.Country)
+                .Select(x => x.Country)
+                .Distinct()
+                .Take(10);
 
 
             // Результат
@@ -301,6 +307,10 @@ namespace Practice_Linq
 
             //foreach
 
+            foreach (var game in selectedGames)
+            {
+                Console.WriteLine(game);
+            }
         }
 
         // Запит 12
